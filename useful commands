@@ -1,0 +1,3 @@
+#Installing pihole to block ADS                   
+curl -sSL https://install.pi-hole.net | bash 
+
