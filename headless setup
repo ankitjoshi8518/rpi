@@ -1,0 +1,37 @@
+#Use the RPI image with desktop applications so that VNC is already installed
+
+#connecting RPI to Wifi
+
+#After loading the RPI image on the SD card, open the SD card contents and create a new file by the name: wpa_supplicant.conf
+#When using windows make sure that the file extension is not .txt when saving the file with this name. Select file type as "All files" when saving
+#wpa_supplicant.conf file should have the following contents. Use your specific 2 digit country code:
+
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=US 
+
+network={
+        ssid="Your WIFI SSID name here" 
+        psk="Your Wifi password here" 
+        
+}
+
+
+#similarly create one more file named just "ssh" with no contents. By doing this, SSH will be enabled on boot. File type should be not be a text file
+#Pi will connect to the wifi and we can ssh into the pi now to do VNC server settings to access the user interface
+
+#setting up VNC server to connect remotely:
+#use the following command to run VNC server on pi manually. This will confirm that VNC is installed and ready to be used
+
+VNCSERVER :1
+
+#if you try to run the same command, it will throw and error that VNCserver is already running.
+# Steps shown below will start VNC server upon boot:
+
+sudo nano /etc/rc.local     #open file to make changes
+
+#Enter the following before the line that says "Exit 0"
+su - pi -c '/usr/bin/tightvncserver :1'
+
+# PI will now start VNC server upon boot
+#use IP address of PI followed by :1 to access the GUI. Ex. 192.168.1.105:1
