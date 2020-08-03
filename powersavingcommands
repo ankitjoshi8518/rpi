@@ -1,0 +1,22 @@
+#USB and wifi needs to be disabled after the pi boots. Add both the commands in crontab -e prefixed by @reboot
+# add the following to crontab -e:
+# @reboot command to turn off USB
+# @reboot command to turn off HDMI
+
+# Disable USB:
+echo '1-1' |sudo tee /sys/bus/usb/drivers/usb/unbind
+
+#Enable USB
+echo '1-1' |sudo tee /sys/bus/usb/drivers/usb/bind
+
+#Turn OFF HDMI output
+sudo /opt/vc/bin/tvservice -o
+
+#Turn ON HDMI output
+sudo /opt/vc/bin/tvservice -p
+
+#To disable the Wi-Fi and Bluetooth simply edit the /boot/config.txt file and add the following lines:
+
+dtoverlay=pi3-disable-wifi
+dtoverlay=pi3-disable-bt
+
